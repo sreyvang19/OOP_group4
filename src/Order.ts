@@ -1,53 +1,74 @@
 import { OrderItem } from "./OrderItem";
 import { Payment } from './Payment';
+import { Product } from "./Product";
+import { Delivery } from "./Delivery";
 
-class Order {
-    id: number;
-    orderItems: OrderItem[];
-    discountApplied: number; // as a percentage (0-100)
-    deliveryFee: number;
-    status: string;
-    payment: Payment;
+export class Order {
+    private static orders: Order[] = []; // Static array to store all orders
 
-    constructor(id: number, deliveryFee: number = 0, discountApplied: number = 0) {
-        this.id = id;
-        this.deliveryFee = deliveryFee;
-        this.discountApplied = discountApplied;
-        this.orderItems = [];
-        this.status = 'PENDING';
+    constructor(
+        private id: number,
+        private orderItems: OrderItem[] = [],
+        private discountApplied: number = 0, // as a percentage (0-100)
+        private deliveryFee: number = 0,
+        private status: string = 'PENDING',
+        private payment?: Payment,
+        private shipment: Delivery[] = []
+    ) {
+        Order.orders.push(this);
     }
 
-    addOrderItem(item: OrderItem): void {
+    public addOrderItem(item: OrderItem): void {
         this.orderItems.push(item);
     }
 
-    removeOrderItem(productId: string): void {
-        this.orderItems = this.orderItems.filter(item => item.productId !== productId);
+    public removeOrderItem(productId: string): void {
+        this.orderItems = this.orderItems.filter(item => item.getProductId() !== productId);
     }
 
-    calculateTotalPrice(): number {
-        let subtotal = this.orderItems.reduce((sum, item) => sum + item.getTotalPrice(), 0);
-        let discount = subtotal * (this.discountApplied / 100);
-        let total = subtotal - discount + this.deliveryFee;
+    public calculateTotalPrice(): number {
+        const subtotal = this.orderItems.reduce((sum, item) => sum + item.getTotalPrice(), 0);
+        const discount = subtotal * (this.discountApplied / 100);
+        const total = subtotal - discount + this.deliveryFee;
         return parseFloat(total.toFixed(2));
     }
 
-    applyDiscount(discountPercentage: number): void {
+    public applyDiscount(discountPercentage: number): void {
         if (discountPercentage < 0 || discountPercentage > 100) {
-            throw new Error('Discount must be between 0 and 100.');
+            throw new Error('Discount percentage must be between 0 and 100');
         }
         this.discountApplied = discountPercentage;
     }
 
-    updateStatus(newStatus: string): void {
+    public updateStatus(newStatus: string): void {
         const validStatuses = ['PENDING', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED'];
-        if (!validStatuses.includes(newStatus.toUpperCase())) {
-            throw new Error('Invalid order status.');
+        const upperStatus = newStatus.toUpperCase();
+        
+        if (validStatuses.indexOf(upperStatus) === -1) {
+            throw new Error(`Invalid status. Must be one of: ${validStatuses.join(', ')}`);
         }
-        this.status = newStatus.toUpperCase();
+        this.status = upperStatus;
     }
 
-    attachPayment(payment: Payment): void {
+    public attachPayment(payment: Payment): void {
         this.payment = payment;
+    }
+
+    public addShipment(delivery: Delivery): void {
+        this.shipment.push(delivery);
+    }
+
+    // Getters
+    public getId(): number { return this.id; }
+    public getOrderItems(): OrderItem[] { return [...this.orderItems]; }
+    public getDiscountApplied(): number { return this.discountApplied; }
+    public getDeliveryFee(): number { return this.deliveryFee; }
+    public getStatus(): string { return this.status; }
+    public getPayment(): Payment | undefined { return this.payment; }
+    public getShipment(): Delivery[] { return [...this.shipment]; }
+
+    // Static method to find order by ID
+    public static findOrderById(id: number): Order | undefined {
+        return Order.orders.find(order => order.getId() === id);
     }
 }

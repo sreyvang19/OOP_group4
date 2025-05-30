@@ -13,6 +13,18 @@ export class Product {
         this.discount = discount >= 0 && discount <= 100 ? discount : 0; // Ensure discount is 0-100%
     }
 
+    public getId(): string {
+        return this.privateId;
+    }
+
+    public getName(): string {
+        return this.name;
+    }
+
+    public getPrice(): number {
+        return this.price;
+    }
+
     public viewProduct(): string {
         return `Product ID: ${this.privateId}, Name: ${this.name}, Price: $${this.price.toFixed(2)}, Stock: ${this.stockQuantity}, Discount: ${this.discount}%`;
     }
