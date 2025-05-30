@@ -5,11 +5,12 @@ export class User {
     private static users: User[] = [];
 
     private user_id: number;
-    private password: string; // Store password
+    private password: string; 
 
     constructor(
         private name: string,
         private email: string,
+        private phoneNumber: string,
         private address: Address,
         password: string,
         user_id?: number
@@ -63,6 +64,6 @@ export class User {
 
     // Get basic info
     public getUserInfo(): string {
-        return `👤 Name: ${this.name}, 📧 Email: ${this.email}, 🏠 Address: ${this.address.getFullAddress()}`;
+        return `👤 Name: ${this.name}, 📧 Email: ${this.email}, 📞 Phone: ${this.phoneNumber} 🏠 Address: ${this.address.getFullAddress()}`;
     }
 }
