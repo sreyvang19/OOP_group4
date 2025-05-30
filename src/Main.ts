@@ -100,11 +100,6 @@ console.log(user1.getUserInfo());
 
 
 
-
-
-
-
-
 const seller = new Seller("S123", "John's Store");
 
 // Add some orders
