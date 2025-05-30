@@ -1,4 +1,4 @@
-// import { Address } from "./Address";
+import { Address } from "./Address";
 
 export class User {
     // Static list to simulate a database
