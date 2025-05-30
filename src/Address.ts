@@ -1,4 +1,3 @@
-// Address
 export class Address {
   constructor(
     private street: string,
@@ -13,6 +12,6 @@ export class Address {
   }
 
   public getFullAddress(): string {
-    return `${this.street}, ${this.sangkat}, ${this.village}`;
+    return `Location: ${this.street}, ${this.sangkat}, ${this.village}`;
   }
 }
