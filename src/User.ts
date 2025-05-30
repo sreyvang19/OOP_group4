@@ -63,6 +63,6 @@ export class User {
 
     // Get basic info
     public getUserInfo(): string {
-        return `👤 Name: ${this.name}, 📧 Email: ${this.email}, 🏠 Address: ${this.address.street}, ${this.address.sangkat}, ${this.address.village}`;
+        return `👤 Name: ${this.name}, 📧 Email: ${this.email}, 🏠 Address: ${this.address.getFullAddress()}`;
     }
 }
