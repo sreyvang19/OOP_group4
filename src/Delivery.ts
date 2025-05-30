@@ -1,13 +1,15 @@
+import { Address } from "./Address";
+
 // Delivery
-class Delivery {
+export class Delivery {
   constructor(
-    public delivery_id: number,
-    public trackingNumber: string,
-    public status: string,
-    public destination: Address
+    private delivery_id: number,
+    private trackingNumber: string,
+    private status: string,
+    private destination: Address
   ) {}
 
-  updateTrackingStatus(status: string): void {
+  public updateTrackingStatus(status: string): void {
     this.status = status;
   }
 }

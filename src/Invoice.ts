@@ -1,11 +1,11 @@
 // Invoice
 class Invoice {
   constructor(
-    public id: string,
-    public issuedDate: Date,
-    public dueDate: Date,
-    public stockQuantity: number
+    private id: string,
+    private issuedDate: Date,
+    private dueDate: Date,
+    private stockQuantity: number
   ) {}
 
-  generateInvoice(): void {}
+  public generateInvoice(): void {}
 }

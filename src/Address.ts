@@ -1,9 +1,9 @@
 // Address
-class Address {
+export class Address {
   constructor(
-    public street: string,
-    public sangkat: string,
-    public village: string
+    private street: string,
+    private sangkat: string,
+    private village: string
   ) {}
 
   updateAddress(street: string, sangkat: string, village: string): void {
@@ -12,7 +12,7 @@ class Address {
     this.village = village;
   }
 
-  getFullAddress(): string {
+  public getFullAddress(): string {
     return `${this.street}, ${this.sangkat}, ${this.village}`;
   }
 }
