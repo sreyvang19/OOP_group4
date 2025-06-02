@@ -8,6 +8,11 @@ import { OrderItem } from "./OrderItem";
 import { Order } from "./Order";
 import { Invoice } from "./Invoice";
 
+// Show the tile of the system
+console.log("====================================");
+console.log("      E-Commerce Product System      ");
+console.log("====================================");
+
 let user1 = new User("John Doe", "john@example.com", "09032423", new Address("123 Main St", "Cityville", "12345"), "password123");
 console.log(user1.register());
 console.log(user1.getUserInfo());
