@@ -53,6 +53,50 @@ console.log(user1.getUserInfo());
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Delivery
 const address = new Address("123 Main St", "Central", "Village A");
 
@@ -66,77 +110,21 @@ const delivery = new Delivery(
 console.log(address.getFullAddress())
 console.log(delivery.getDeliveryInfo());
 
-
-// --- Invoice Test ---
+// Create product and order item
 const invoiceProduct = new Product("P100", "Monitor", 199.99, 30, 5);
 const invoiceOrderItem = new OrderItem(invoiceProduct, 2);
 
+// Create the order
 const invoiceOrder = new Order(1001);
 invoiceOrder.addOrderItem(invoiceOrderItem);
 
+// Create the invoice with customer
 const invoice = new Invoice(
   "INV-2025-001",
   new Date(),
   new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
   30,
-  invoiceOrder
+  invoiceOrder,
 );
 
 invoice.generateInvoice();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const seller = new Seller("S123", "John's Store");
-
-// Add some orders
-seller.addOrder("O001", "P001", 20); 
-seller.addOrder("O002", "P002", 10); 
-
-// View orders
-seller.viewOrder();
-
-// Update stock (just logs, no inventory tracking)
-seller.updateStock("P001", 50);
-seller.removeStock("P002", 5); 
-
-const product = new Product("P001", "Laptop", 999.99, 50, 10);
-
-// Create product
-product.createProduct();
-
-// View product
-console.log(product.viewProduct());
-
-// Update product details
-product.updateProduct("Gaming Laptop", 1099.99, 40, 15);
-
-// Adjust stock
-product.adjustStock(20); // Add 20 units
-product.adjustStock(-10); // Remove 10 units
-
-// Try invalid stock reduction
-product.adjustStock(-100);
-
-// View updated product
-console.log(product.viewProduct());
-
-
-
-
