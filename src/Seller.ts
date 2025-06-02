@@ -1,61 +1,128 @@
+import { Product } from './Product';
 export class Seller {
-    private sellerId: string;
+    private static sellers: Seller[] = [];
+    private id: number;
     private name: string;
-    private orders: Array<{ orderId: string, productId: string, quantity: number }> = [];
+    private orders: string[];
+    private products: Product[];  // Relationship
 
-    constructor(sellerId: string, name: string) {
-        this.sellerId = sellerId;
+    constructor(id: number, name: string) {
+        this.id = id;
         this.name = name;
+        this.orders = [];
+        this.products = [];
+        Seller.sellers.push(this);
     }
 
-    public getSellerId(): string {
-        return this.sellerId;
+    public addProduct(product: Product): void {
+        if (!product) {
+            throw new Error("Cannot add null or undefined product");
+        }
+        if (this.products.indexOf(product) === -1) {
+            product.setSeller(this);
+            this.products.push(product);
+        }
+    }
+
+    public removeProduct(product: Product): void {
+        if (!product) {
+            throw new Error("Cannot remove null or undefined product");
+        }
+        const index = this.products.indexOf(product);
+        if (index !== -1) {
+            this.products.splice(index, 1);
+            product.setSeller(undefined);
+        }
+    }
+
+    public getProducts(): Product[] {
+        return [...this.products];
+    }
+
+    public createProduct(productId: number, name: string, price: number, stockQuantity: number, discount: number): Product {
+        const product = new Product(productId, name, price, stockQuantity, discount);
+        this.addProduct(product);
+        return product;
+    }
+
+    public updateProduct(product: Product, name?: string, price?: number, stockQuantity?: number, discount?: number): void {
+        if (this.products.indexOf(product) === -1) {
+            throw new Error("Product not found in seller's inventory");
+        }
+        product.updateProduct(name, price, stockQuantity, discount);
+    }
+
+    public deleteProduct(product: Product): void {
+        const index = this.products.indexOf(product);
+        if (index === -1) {
+            throw new Error("Product not found in seller's inventory");
+        }
+        product.deleteProduct();
+        this.removeProduct(product);
+    }
+
+    public viewProducts(): string {
+        if (this.products.length === 0) {
+            return "No products available";
+        }
+        return this.products
+            .map((product, index) => `Product #${index + 1}:\n${product.displayProductInfo()}`)
+            .join('\n\n');
+    }
+
+    public viewOrder(): string {
+        if (this.orders.length === 0) {
+            return "No orders available";
+        }
+        return this.orders.map((order, index) => `Order #${index + 1}: ${order}`).join('\n');
+    }
+
+    public updateStock(product: Product, quantity: number): void {
+        if (this.products.indexOf(product) !== -1) {
+            product.adjustStock(quantity);
+        }
+    }
+
+    public removeStock(product: Product, quantity: number): void {
+        if (this.products.indexOf(product) !== -1 && quantity > 0) {
+            product.adjustStock(-quantity);
+        }
+    }
+
+    public addOrder(order: string): void {
+        this.orders.push(order);
+    }
+
+    public removeOrder(order: string): void {
+        const index = this.orders.indexOf(order);
+        if (index !== -1) {
+            this.orders.splice(index, 1);
+        }
+    }
+
+    public getId(): number {
+        return this.id;
     }
 
     public getName(): string {
         return this.name;
     }
 
-    // View all orders for this seller
-    public viewOrder(): void {
-        if (this.orders.length === 0) {
-            console.log("No orders found.");
-            return;
-        }
-
-        console.log(`Orders for ${this.name} (Seller ID: ${this.sellerId}):`);
-        this.orders.forEach(order => {
-            console.log(`Order ID: ${order.orderId}, Product ID: ${order.productId}, Quantity: ${order.quantity}`);
-        });
+    public getOrders(): string[] {
+        return [...this.orders];
     }
 
-    // Update stock (placeholder for external system or logging)
-    public updateStock(productId: string, quantity: number): void {
-        if (quantity < 0) {
-            console.log("Quantity cannot be negative.");
-            return;
+    // Add static method to view all products from all sellers
+    public static viewAllProducts(): string {
+        if (this.sellers.length === 0) {
+            return "No sellers or products available";
         }
-        console.log(`Stock update requested for Product ID ${productId}: ${quantity} units`);
-        // Could integrate with an external system here
-    }
 
-    // Remove stock (placeholder for external system or logging)
-    public removeStock(productId: string, quantity: number): void {
-        if (quantity < 0) {
-            console.log("Quantity cannot be negative.");
-            return;
-        }
-        console.log(`Stock removal requested for Product ID ${productId}: ${quantity} units`);
-        // Could integrate with an external system here
-    }
-
-    // Helper method to add an order
-    public addOrder(orderId: string, productId: string, quantity: number): void {
-        if (quantity <= 0) {
-            console.log("Order quantity must be positive.");
-            return;
-        }
-        this.orders.push({ orderId, productId, quantity });
-        console.log(`Order ${orderId} added for Product ID ${productId}, Quantity: ${quantity}`);
+        return this.sellers
+            .filter(seller => seller.products.length > 0)
+            .map(seller => 
+                `\n=== ${seller.getName()} (ID: ${seller.getId()}) ===\n${seller.viewProducts()}`
+            )
+            .join('\n');
     }
 }
