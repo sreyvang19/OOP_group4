@@ -8,52 +8,55 @@ import { Product } from "./Product";
 
 let user1 = new User("John Doe", "john@example.com", "09032423", new Address("123 Main St", "Cityville", "12345"), "password123");
 
-// First Seller
-const seller1 = new Seller(101, "Alice's Shop");
-// console.log("\n[Seller 1]");
-// console.log("Name:", seller1.getName());
+console.log("\n========== E-COMMERCE SYSTEM DEMO ==========");
 
-// Create and manage products
-const laptop1 = seller1.createProduct(1, "Laptop", 999.99, 10, 5);
-const phone1 = seller1.createProduct(2, "Smartphone", 499.99, 20, 10);
+// Test Seller 1
+console.log("\n1. Creating First Seller");
+const seller1 = new Seller(101, "Tech Store");
+console.log(`Created: ${seller1.getName()} (ID: ${seller1.getId()})`);
 
-seller1.updateProduct(laptop1, "Gaming Laptop", 1299.99);
-seller1.updateStock(phone1, 5);
+// Test Product Management
+console.log("\n2. Product Management - First Seller");
+const laptop = seller1.createProduct(1, "Gaming Laptop", 1299.99, 10, 5);
+const phone = seller1.createProduct(2, "Smartphone", 699.99, 20, 10);
+console.log("\nInitial Products:");
+console.log(seller1.viewProducts());
 
-// console.log("\n[Seller 1 - Products]");
-// console.log(seller1.viewProducts());
+// Test Product Updates
+console.log("\n3. Updating Products");
+seller1.updateProduct(laptop, "Premium Gaming Laptop", 1499.99);
+seller1.updateStock(phone, 5);
+console.log("\nAfter Updates:");
+console.log(seller1.viewProducts());
 
-// Add orders
-seller1.addOrder("Order #ABC123: Laptop x1");
-seller1.addOrder("Order #DEF456: Accessories x3");
+// Test Second Seller
+console.log("\n4. Creating Second Seller");
+const seller2 = new Seller(102, "Electronics Hub");
+console.log(`Created: ${seller2.getName()} (ID: ${seller2.getId()})`);
 
-// console.log("\n[Seller 1 - Orders]");
-// console.log(seller1.viewOrder());
-
-// Second Seller
-const seller2 = new Seller(1001, "Tech Store");
-// console.log("\n[Seller 2]");
-// console.log("Name:", seller2.getName());
-
-const laptop2 = seller2.createProduct(3, "Gaming Laptop", 1299.99, 10, 5);
-const phone2 = seller2.createProduct(4, "Smartphone", 699.99, 20, 10);
-const tablet2 = seller2.createProduct(5, "Tablet", 499.99, 15, 0);
-
-// console.log("\n[Seller 2 - Products]");
-// console.log(seller2.viewProducts());
-
-seller2.updateProduct(laptop2, "Premium Gaming Laptop", 1499.99);
-seller2.updateStock(phone2, 5);
-
-// console.log("\n[Seller 2 - Updated Products]");
-// console.log(seller2.viewProducts());
-
-seller2.deleteProduct(tablet2);
-// console.log("\n[Seller 2 - Final Products]");
-// console.log(seller2.viewProducts());
+// Add products to second seller
+const tablet = seller2.createProduct(3, "Tablet Pro", 899.99, 15, 0);
+const watch = seller2.createProduct(4, "Smart Watch", 299.99, 30, 15);
 
 // View all products from all sellers
+console.log("\n5. Viewing All Products in System");
 console.log(Seller.viewAllProducts());
+
+// Test Order Management
+console.log("\n6. Order Management");
+seller1.addOrder("Order #1: Gaming Laptop x2");
+seller1.addOrder("Order #2: Smartphone x1");
+console.log("\nOrders for", seller1.getName() + ":");
+console.log(seller1.viewOrder());
+
+// Test Product Deletion
+console.log("\n7. Product Deletion");
+console.log("Removing tablet from", seller2.getName());
+seller2.deleteProduct(tablet);
+console.log("\nFinal Product List for", seller2.getName() + ":");
+console.log(seller2.viewProducts());
+
+console.log("\n========== END OF DEMO ==========");
 
 
 

@@ -49,16 +49,21 @@ export class Seller {
         if (this.products.indexOf(product) === -1) {
             throw new Error("Product not found in seller's inventory");
         }
-        product.updateProduct(name, price, stockQuantity, discount);
+        product.manageProduct(this, 'update', { name, price, stock: stockQuantity, discount });
     }
 
     public deleteProduct(product: Product): void {
-        const index = this.products.indexOf(product);
-        if (index === -1) {
+        if (this.products.indexOf(product) === -1) {
             throw new Error("Product not found in seller's inventory");
         }
-        product.deleteProduct();
+        product.manageProduct(this, 'delete');
         this.removeProduct(product);
+    }
+
+    public updateStock(product: Product, quantity: number): void {
+        if (this.products.indexOf(product) !== -1) {
+            product.manageProduct(this, 'adjustStock', { quantity });
+        }
     }
 
     public viewProducts(): string {
@@ -66,7 +71,8 @@ export class Seller {
             return "No products available";
         }
         return this.products
-            .map((product, index) => `Product #${index + 1}:\n${product.displayProductInfo()}`)
+            .map((product, index) => 
+                `Product #${index + 1}:\n${product.manageProduct(this, 'view')}`)
             .join('\n\n');
     }
 
@@ -75,18 +81,6 @@ export class Seller {
             return "No orders available";
         }
         return this.orders.map((order, index) => `Order #${index + 1}: ${order}`).join('\n');
-    }
-
-    public updateStock(product: Product, quantity: number): void {
-        if (this.products.indexOf(product) !== -1) {
-            product.adjustStock(quantity);
-        }
-    }
-
-    public removeStock(product: Product, quantity: number): void {
-        if (this.products.indexOf(product) !== -1 && quantity > 0) {
-            product.adjustStock(-quantity);
-        }
     }
 
     public addOrder(order: string): void {
