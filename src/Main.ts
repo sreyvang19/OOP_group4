@@ -97,7 +97,6 @@ console.log("\n========== END OF DEMO ==========");
 
 
 
-
 // Delivery
 const address = new Address("123 Main St", "Central", "Village A");
 
@@ -112,7 +111,7 @@ console.log(address.getFullAddress())
 console.log(delivery.getDeliveryInfo());
 
 // Create product and order item
-const invoiceProduct = new Product(1, "Monitor", 199.99, 30, 5);
+const invoiceProduct = new Product("P100", "Monitor", 199.99, 30, 5);
 const invoiceOrderItem = new OrderItem(invoiceProduct, 2);
 
 // Create the order
