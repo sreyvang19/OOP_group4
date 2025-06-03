@@ -98,6 +98,7 @@ console.log("\n========== END OF DEMO ==========");
 
 
 // Delivery
+console.log("\nDelivery:");
 const address = new Address("123 Main St", "Central", "Village A");
 
 const delivery = new Delivery(
@@ -111,7 +112,7 @@ console.log(address.getFullAddress())
 console.log(delivery.getDeliveryInfo());
 
 // Create product and order item
-const invoiceProduct = new Product("Monitor", 199.99, 30, 0);
+const invoiceProduct = new Product("Gaming Laptop", 1499.99, 10, 0);
 const invoiceOrderItem = new OrderItem(invoiceProduct, 2);
 
 // Create the order
@@ -123,7 +124,7 @@ const invoice = new Invoice(
   "INV-2025-001",
   new Date(),
   new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-  30,
+  10,
   invoiceOrder,
 );
 
