@@ -31,8 +31,10 @@ export class Invoice {
     console.log('Items:');
     items.forEach((item, index) => {
       const product = item.getProduct();
+      const quantity = item.getQuantity();
+      const itemTotal = product.getPrice() * quantity;
       console.log(
-        `${index + 1}. ${product.getName()} x${item.getQuantity()} = $${item.getTotalPrice().toFixed(2)}`
+        `${index + 1}. ${product.getProductName()} x${quantity} = $${itemTotal.toFixed(2)}`
       );
     });
 

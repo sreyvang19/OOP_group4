@@ -24,8 +24,8 @@ console.log(`Created: ${seller1.getName()} (ID: ${seller1.getId()})`);
 
 // Test Product Management
 console.log("\n2. Product Management - First Seller");
-const laptop = seller1.createProduct(1, "Gaming Laptop", 1299.99, 10, 5);
-const phone = seller1.createProduct(2, "Smartphone", 699.99, 20, 10);
+const laptop = seller1.createProduct("Gaming Laptop", 1299.99, 10, 5);
+const phone = seller1.createProduct("Smartphone", 699.99, 20, 10);
 console.log("\nInitial Products:");
 console.log(seller1.viewProducts());
 
@@ -42,8 +42,8 @@ const seller2 = new Seller(102, "Electronics Hub");
 console.log(`Created: ${seller2.getName()} (ID: ${seller2.getId()})`);
 
 // Add products to second seller
-const tablet = seller2.createProduct(3, "Tablet Pro", 899.99, 15, 0);
-const watch = seller2.createProduct(4, "Smart Watch", 299.99, 30, 15);
+const tablet = seller2.createProduct("Tablet Pro", 899.99, 15, 0);
+const watch = seller2.createProduct("Smart Watch", 299.99, 30, 15);
 
 // View all products from all sellers
 console.log("\n5. Viewing All Products in System");
@@ -111,7 +111,7 @@ console.log(address.getFullAddress())
 console.log(delivery.getDeliveryInfo());
 
 // Create product and order item
-const invoiceProduct = new Product("P100", "Monitor", 199.99, 30, 5);
+const invoiceProduct = new Product("Monitor", 199.99, 30, 0);
 const invoiceOrderItem = new OrderItem(invoiceProduct, 2);
 
 // Create the order

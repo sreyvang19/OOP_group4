@@ -39,8 +39,8 @@ export class Seller {
         return [...this.products];
     }
 
-    public createProduct(productId: number, name: string, price: number, stockQuantity: number, discount: number): Product {
-        const product = new Product(productId, name, price, stockQuantity, discount);
+    public createProduct(name: string, price: number, stockQuantity: number, discount: number): Product {
+        const product = new Product(name, price, stockQuantity, discount);
         this.addProduct(product);
         return product;
     }

@@ -1,7 +1,7 @@
 import { Seller } from './Seller';
 
 export class Product {
-
+    private static lastId: number = 0;
     private productId: number;
     private name: string;
     private price: number;
@@ -9,8 +9,8 @@ export class Product {
     private discount: number;
     private seller?: Seller;  // Make seller optional
 
-    constructor(productId: number, name: string, price: number, stockQuantity: number, discount: number) {
-        this.productId = productId;
+    constructor(name: string, price: number, stockQuantity: number, discount: number) {
+        this.productId = ++Product.lastId;
         this.name = name;
         this.price = price >= 0 ? price : 0;
         this.stockQuantity = stockQuantity >= 0 ? stockQuantity : 0;
@@ -37,6 +37,10 @@ export class Product {
     protected getFormattedPrice(): string {
         const discountedPrice = this.price * (1 - this.discount / 100);
         return `$${discountedPrice.toFixed(2)}`;
+    }
+
+    public getName(): string {
+        return this.name;
     }
 
     public getPrice(): number {
@@ -125,5 +129,13 @@ export class Product {
     // Added for Seller class to access protected methods
     protected getId(): number {
         return this.productId;
+    }
+
+    public getProductId(): number {
+        return this.getId();
+    }
+
+    public getProductName(): string {
+        return this.name;
     }
 }

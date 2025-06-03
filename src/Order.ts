@@ -22,12 +22,19 @@ export class Order {
         this.orderItems.push(item);
     }
 
-    public removeOrderItem(productId: string): void {
-        this.orderItems = this.orderItems.filter(item => item.getProductId() !== productId);
+    public removeOrderItem(productId: number): void {
+        this.orderItems = this.orderItems.filter(item => {
+            const product = item.getProduct();
+            return product.getProductId() !== productId;  // Assuming Product class has a public getProductId method
+        });
     }
 
     public calculateTotalPrice(): number {
-        const subtotal = this.orderItems.reduce((sum, item) => sum + item.getTotalPrice(), 0);
+        const subtotal = this.orderItems.reduce((sum, item) => {
+            const product = item.getProduct();
+            const quantity = item.getQuantity();
+            return sum + (product.getPrice() * quantity);
+        }, 0);
         const discount = subtotal * (this.discountApplied / 100);
         const total = subtotal - discount + this.deliveryFee;
         return parseFloat(total.toFixed(2));
