@@ -4,12 +4,12 @@ import { Product } from "./Product";
 import { Delivery } from "./Delivery";
 
 export class Order {
-    private static orders: Order[] = []; // Static array to store all orders
+    private static orders: Order[] = []; 
 
     constructor(
         private id: number,
         private orderItems: OrderItem[] = [],
-        private discountApplied: number = 0, // as a percentage (0-100)
+        private discountApplied: number = 0, 
         private deliveryFee: number = 0,
         private status: string = 'PENDING',
         private payment?: Payment,
@@ -25,7 +25,7 @@ export class Order {
     public removeOrderItem(productId: number): void {
         this.orderItems = this.orderItems.filter(item => {
             const product = item.getProduct();
-            return product.getProductId() !== productId;  // Assuming Product class has a public getProductId method
+            return product.getProductId() !== productId;  
         });
     }
 

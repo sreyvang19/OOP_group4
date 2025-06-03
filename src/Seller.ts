@@ -4,7 +4,7 @@ export class Seller {
     private id: number;
     private name: string;
     private orders: string[];
-    private products: Product[];  // Relationship
+    private products: Product[];
 
     constructor(id: number, name: string) {
         this.id = id;

@@ -7,7 +7,7 @@ export class Product {
     private price: number;
     private stockQuantity: number;
     private discount: number;
-    private seller?: Seller;  // Make seller optional
+    private seller?: Seller;
 
     constructor(name: string, price: number, stockQuantity: number, discount: number) {
         this.productId = ++Product.lastId;

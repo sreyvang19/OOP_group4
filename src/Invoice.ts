@@ -16,7 +16,7 @@ export class Invoice {
     const totalPrice = this.order.calculateTotalPrice();
     const issued = this.issuedDate.toLocaleDateString();
     const due = this.dueDate.toLocaleDateString();
-    const items = this.order.getOrderItems(); // ✅ Get all order items
+    const items = this.order.getOrderItems();
 
     console.log('='.repeat(40));
     console.log(`🧾  INVOICE`);
