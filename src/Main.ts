@@ -62,39 +62,6 @@ seller2.deleteProduct(tablet);
 console.log("\nFinal Product List for", seller2.getName() + ":");
 console.log(seller2.viewProducts());
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Delivery
 console.log("\nDelivery:");
 const address = new Address("123 Main St", "Central", "Village A");
@@ -109,24 +76,24 @@ const delivery = new Delivery(
 console.log(address.getFullAddress())
 console.log(delivery.getDeliveryInfo());
 
-// Create product and order item
+
+// 11. Create a Product and Order for Invoice
+console.log("\n9. Create Order and Invoice:");
 const invoiceProduct = new Product("Gaming Laptop", 1499.99, 10, 0);
 const invoiceOrderItem = new OrderItem(invoiceProduct, 2);
-
-// Create the order
 const invoiceOrder = new Order(1001);
 invoiceOrder.addOrderItem(invoiceOrderItem);
 
-// Create the invoice with customer
+// 12. Create Invoice
 const invoice = new Invoice(
   "INV-2025-001",
   new Date(),
-  new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+  new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Due in 7 days
   10,
-  invoiceOrder,
+  invoiceOrder
 );
 
-
+// 13. Generate Invoice
 invoice.generateInvoice();
 
 

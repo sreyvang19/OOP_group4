@@ -1,6 +1,4 @@
 import { Order } from './Order';
-import { User } from './User';
-import { OrderItem } from './OrderItem';
 
 export class Invoice {
   constructor(
@@ -8,12 +6,19 @@ export class Invoice {
     private issuedDate: Date,
     private dueDate: Date,
     private stockQuantity: number,
-    private order: Order,
+    private order?: Order 
   ) {}
 
-  // Method to generate the invoice
-  // This method will print the invoice details to the console
+  public attachOrder(order: Order): void {
+    this.order = order;
+  }
+
   public generateInvoice(): void {
+    if (!this.order) {
+      console.log("❌ Cannot generate invoice: No order attached.");
+      return;
+    }
+
     const orderId = this.order.getId();
     const totalPrice = this.order.calculateTotalPrice();
     const issued = this.issuedDate.toLocaleDateString();
