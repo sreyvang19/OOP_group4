@@ -15,7 +15,6 @@ console.log("====================================");
 
 let user1 = new User("John Doe", "john@example.com", "09032423", new Address("123 Main St", "Cityville", "12345"), "password123");
 
-console.log("\n========== E-COMMERCE SYSTEM DEMO ==========");
 
 // Test Seller 1
 console.log("\n1. Creating First Seller");
@@ -63,7 +62,6 @@ seller2.deleteProduct(tablet);
 console.log("\nFinal Product List for", seller2.getName() + ":");
 console.log(seller2.viewProducts());
 
-console.log("\n========== END OF DEMO ==========");
 
 
 

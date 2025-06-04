@@ -11,6 +11,8 @@ export class Invoice {
     private order: Order,
   ) {}
 
+  // Method to generate the invoice
+  // This method will print the invoice details to the console
   public generateInvoice(): void {
     const orderId = this.order.getId();
     const totalPrice = this.order.calculateTotalPrice();

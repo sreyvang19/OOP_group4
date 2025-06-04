@@ -18,10 +18,12 @@ export class Order {
         Order.orders.push(this);
     }
 
+    // Method to add an order item to the order
     public addOrderItem(item: OrderItem): void {
         this.orderItems.push(item);
     }
 
+    //method to remove an order item from the order
     public removeOrderItem(productId: number): void {
         this.orderItems = this.orderItems.filter(item => {
             const product = item.getProduct();
@@ -29,6 +31,7 @@ export class Order {
         });
     }
 
+// Method to calculate the total price of the order
     public calculateTotalPrice(): number {
         const subtotal = this.orderItems.reduce((sum, item) => {
             const product = item.getProduct();
@@ -40,6 +43,7 @@ export class Order {
         return parseFloat(total.toFixed(2));
     }
 
+        // Method to apply a discount to the order
     public applyDiscount(discountPercentage: number): void {
         if (discountPercentage < 0 || discountPercentage > 100) {
             throw new Error('Discount percentage must be between 0 and 100');
@@ -47,6 +51,7 @@ export class Order {
         this.discountApplied = discountPercentage;
     }
 
+        // Method to update the status of the order
     public updateStatus(newStatus: string): void {
         const validStatuses = ['PENDING', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED'];
         const upperStatus = newStatus.toUpperCase();
@@ -57,10 +62,12 @@ export class Order {
         this.status = upperStatus;
     }
 
+    // Method to attach a payment to the order
     public attachPayment(payment: Payment): void {
         this.payment = payment;
     }
 
+    // Method to add a shipment to the order
     public addShipment(delivery: Delivery): void {
         this.shipment.push(delivery);
     }

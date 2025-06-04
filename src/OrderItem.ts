@@ -21,23 +21,24 @@ export class OrderItem {
         this.status = 'Pending';
     }
 
+    // Method to cancel the order item
     public cancel(): void {
         this.status = 'Cancelled';
     }
 
+    // Method to return the item
     public returnItem(): void {
         this.status = 'Returned';
     }
 
-    public refundItem(): void {
-        this.status = 'Refunded';
-    }
 
+    // Method to calculate the total price of the order item
     public calculateTotal(): number {
         const basePrice = this.pricePurchase * this.quantity;
         return basePrice * (1 - this.discountPurchase / 100);
     }
 
+    // Method to update the quantity of the order item
     public updateQuantity(newQuantity: number): number {
         if (newQuantity < 1) {
             throw new Error('Quantity must be at least 1');

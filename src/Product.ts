@@ -17,6 +17,7 @@ export class Product {
         this.discount = discount >= 0 && discount <= 100 ? discount : 0;
     }
 
+    //displayProductInfo 
     protected displayProductInfo(): string {
         return `
             Product ID: ${this.productId}
@@ -81,6 +82,7 @@ export class Product {
         }
     }
 
+    // Method to view all product details, can be called by Seller
     protected viewProduct(): string {
         if (!this.seller) {
             return "Product not assigned to any seller";
@@ -103,6 +105,7 @@ export class Product {
         this.discount = discount >= 0 && discount <= 100 ? discount : 0;
     }
 
+    // Method to update product details, can be called by Seller
     private updateProduct(name?: string, price?: number, stockQuantity?: number, discount?: number): void {
         if (name) this.name = name;
         if (price !== undefined && price >= 0) this.price = price;
@@ -110,6 +113,7 @@ export class Product {
         if (discount !== undefined && discount >= 0 && discount <= 100) this.discount = discount;
     }
 
+    // Method to delete product, can be called by Seller
     private deleteProduct(): void {
         if (!this.seller) return;
         this.name = '';
@@ -118,7 +122,8 @@ export class Product {
         this.discount = 0;
         this.seller = undefined;
     }
-
+    
+    // Method to adjust stock, can be called by Seller
     private adjustStock(quantity: number): void {
         if (quantity < 0 && Math.abs(quantity) > this.stockQuantity) {
             throw new Error(`Cannot reduce stock by ${Math.abs(quantity)}. Only ${this.stockQuantity} available.`);

@@ -12,6 +12,7 @@ export class Payment {
         this.status = PaymentStatus.PENDING;
     }
 
+    //method to process payment
     processPayment(): void {
         // Simulated logic
         if (this.method === PaymentType.CREDIT_CARD || this.method === PaymentType.DEBIT_CARD) {
@@ -24,7 +25,8 @@ export class Payment {
         }
     }
 
-    refund(): void {
+    // Method to refund payment
+    public refund(): void {
         if (this.status !== PaymentStatus.COMPLETED) {
             throw new Error('Cannot refund payment that is not completed.');
         }
