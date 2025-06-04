@@ -20,16 +20,19 @@ export class Order {
     Order.orders.push(this);
   }
 
+  // Method to create a new order
   public addOrderItem(item: OrderItem): void {
     this.orderItems.push(item);
   }
 
+  // Method to remove an order item
   public removeOrderItem(productId: number): void {
     this.orderItems = this.orderItems.filter(item => {
       return item.getProduct().getProductId() !== productId;
     });
   }
 
+  // Method to calculate the total price of the order
   public calculateTotalPrice(): number {
     const subtotal = this.orderItems.reduce((sum, item) => {
       return sum + (item.getProduct().getPrice() * item.getQuantity());
@@ -39,6 +42,7 @@ export class Order {
     return parseFloat(total.toFixed(2));
   }
 
+  // Method to apply a discount to the order
   public applyDiscount(discountPercentage: number): void {
     if (discountPercentage < 0 || discountPercentage > 100) {
       throw new Error('Discount percentage must be between 0 and 100');
@@ -46,6 +50,7 @@ export class Order {
     this.discountApplied = discountPercentage;
   }
 
+  // Method to update the order status
   public updateStatus(newStatus: string): void {
     const validStatuses = ['PENDING', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED'];
     const upperStatus = newStatus.toUpperCase();
@@ -55,22 +60,27 @@ export class Order {
     this.status = upperStatus;
   }
 
+  // Method to attach payment to the order
   public attachPayment(payment: Payment): void {
     this.payment = payment;
   }
 
+    // Method to add a shipment to the order
   public addShipment(delivery: Delivery): void {
     this.shipment.push(delivery);
   }
 
+  // Method to set or update the invoice for the order
   public setInvoice(invoice: Invoice): void {
     this.invoice = invoice;
   }
 
+  // Method to check if the order has an invoice
   public hasInvoice(): boolean {
     return !!this.invoice;
   }
 
+  // Method to get the invoice for the order
   public getInvoice(): Invoice | undefined {
     return this.invoice;
   }

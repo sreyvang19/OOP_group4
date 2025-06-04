@@ -15,6 +15,7 @@ export class Invoice {
     order.setInvoice(this); // Link invoice to order
   }
 
+  // Method to generate the invoice
   public generateInvoice(): void {
     const orderId = this.order.getId();
     const totalPrice = this.order.calculateTotalPrice();
