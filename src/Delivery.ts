@@ -17,4 +17,20 @@ export class Delivery {
   public getDeliveryInfo(): string {
     return `Tracking #${this.trackingNumber}, Status: ${this.status}, Type: ${this.deliveryType}`;
   }
+
+  public getTrackingNumber(): string {
+    return this.trackingNumber;
+  }
+
+  public getDeliveryType(): DeliveryType {
+    return this.deliveryType;
+  }
+
+  public getAddress(): Address {
+    return this.destination;
+  }
+
+  public getStatus(): string {
+    return this.status;
+  }
 }

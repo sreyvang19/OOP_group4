@@ -96,4 +96,13 @@ export class Order {
   public static findOrderById(id: number): Order | undefined {
     return Order.orders.find(order => order.getId() === id);
   }
+
+  public static getAllOrders(): Order[] {
+    return [...Order.orders];
+  }
+
+  public setDeliveryFee(fee: number): void {
+    if (fee < 0) throw new Error("Delivery fee cannot be negative");
+    this.deliveryFee = fee;
+  }
 }

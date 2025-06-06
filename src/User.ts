@@ -3,7 +3,7 @@ import { Address } from "./Address";
 export class User {
     // Static list to simulate a database
     private static users: User[] = [];
-
+    private orderHistory: string[] = [];
     private user_id: number;
     private password: string; 
 
@@ -57,9 +57,25 @@ export class User {
         return "✅ Password changed successfully!";
     }
 
-    // View order history placeholder
-    public viewOrderHistory(): void {
-        console.log(`Showing order history for ${this.name}`);
+    //Static method: Log-out
+
+    public static logOut(email: string): string {
+        const foundUser = User.users.find(u => u.email === email);
+
+        if (!foundUser) {
+            return "❌ User not found. Please register first.";
+        }
+
+        // Simulate logging out
+        return `✅ ${foundUser.name} has been logged out.`;
+    }
+
+    //ViewHistory Order
+    public viewOrderHistory(): string {
+        if (this.orderHistory.length === 0) {
+            return "📦 No orders found in your history.";
+        }
+        return "📦 Order History:\n" + this.orderHistory.map((order, idx) => `${idx + 1}. ${order}`).join('\n');
     }
 
     // Get basic info

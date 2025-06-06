@@ -7,11 +7,11 @@ import { Product } from "./Product";
 import { OrderItem } from "./OrderItem";
 import { Order } from "./Order";
 import { Invoice } from "./Invoice";
+import { Review } from "./Review";
 
-// Show the title of the system
-console.log("====================================");
-console.log("      E-Commerce Product System      ");
-console.log("====================================");
+// System Header
+console.log("\n🛍️  E-COMMERCE SYSTEM");
+console.log("=".repeat(50));
 
 // 1. Create User
 let user1 = new User(
@@ -45,8 +45,12 @@ console.log("\n4. Creating Second Seller");
 const seller2 = new Seller(102, "Electronics Hub");
 console.log(`Created: ${seller2.getName()} (ID: ${seller2.getId()})`);
 
+
+console.log("\n2. Product Management - Second Seller");
 const tablet = seller2.createProduct("Tablet Pro", 899.99, 15, 0);
 const watch = seller2.createProduct("Smart Watch", 299.99, 30, 15);
+console.log("\nInitial Products:");
+console.log(seller2.viewProducts());
 
 // 5. View All Products in System
 console.log("\n5. Viewing All Products in System");
@@ -88,3 +92,97 @@ if (order1.getOrderItems().length > 0 && !order1.hasInvoice()) {
 } else {
   console.log("❌ Cannot create invoice: Order is empty or already invoiced.");
 }
+
+// Customer Order Details
+console.log("\n📦 ORDER SUMMARY");
+console.log("-".repeat(50));
+const order2 = new Order(1002);
+const orderItem3 = new OrderItem(laptop, 2);
+const orderItem4 = new OrderItem(phone, 1);
+order2.addOrderItem(orderItem3);
+order2.addOrderItem(orderItem4);
+order2.applyDiscount(10);
+order2.setDeliveryFee(15);
+
+console.log("Items in Cart:");
+order2.getOrderItems().forEach(item => {
+    console.log(`• ${item.getProduct().getProductName()} (${item.getQuantity()} units)`);
+});
+console.log("\nPrice Breakdown:");
+console.log(`Items Subtotal     : $${order2.calculateTotalPrice()}`);
+console.log(`Discount Applied   : ${order2.getDiscountApplied()}%`);
+console.log(`Delivery Fee       : $${order2.getDeliveryFee()}`);
+console.log(`Final Total        : $${order2.calculateTotalPrice()}`);
+
+// Seller Dashboard
+console.log("\n🏪 SELLER DASHBOARD - " + seller1.getName());
+console.log("-".repeat(50));
+const sellerProducts = [laptop, phone];
+const sellerOrders = Order.getAllOrders().filter(order => 
+    order.getOrderItems().some(item => 
+        sellerProducts.includes(item.getProduct())
+    )
+);
+console.log("Recent Orders:");
+sellerOrders.forEach(order => {
+    console.log(`\nOrder #${order.getId()}`);
+    order.getOrderItems()
+        .filter(item => sellerProducts.includes(item.getProduct()))
+        .forEach(item => {
+            console.log(`• ${item.getProduct().getProductName()} x${item.getQuantity()}`);
+        });
+});
+
+// Delivery Tracking
+console.log("\n🚚 DELIVERY TRACKING");
+console.log("-".repeat(50));
+const deliveries = [
+    new Delivery(1, "TRACK123", "In Transit", deliveryAddress, DeliveryType.EXPRESS),
+    new Delivery(2, "TRACK124", "Pending", deliveryAddress, DeliveryType.STANDARD)
+];
+deliveries.forEach(delivery => {
+    console.log("\nShipment Details:");
+    console.log(`📦 Tracking Number : ${delivery.getTrackingNumber()}`);
+    console.log(`🚛 Delivery Method : ${delivery.getDeliveryType()}`);
+    console.log(`📍 Delivery To    : ${delivery.getAddress().getFullAddress()}`);
+    console.log(`📋 Status         : ${delivery.getStatus()}`);
+});
+
+// Inventory Management
+console.log("\n📊 INVENTORY MANAGEMENT");
+console.log("-".repeat(50));
+[seller1, seller2].forEach(seller => {
+    console.log(`\n${seller.getName()} Stock Levels:`);
+    seller.getProducts().forEach(product => {
+        console.log(`• ${product.getProductName()}: ${product.getStockQuantity()} units in stock`);
+    });
+});
+
+// Order Modification
+console.log("\n✏️  ORDER MODIFICATION");
+console.log("-".repeat(50));
+console.log("Original Order:");
+console.log(`• Items Count: ${order1.getOrderItems().length}`);
+console.log(`• Total Amount: $${order1.calculateTotalPrice()}`);
+
+order1.removeOrderItem(phone.getProductId());
+console.log("\nUpdated Order:");
+console.log(`• Items Count: ${order1.getOrderItems().length}`);
+console.log(`• New Total: $${order1.calculateTotalPrice()}`);
+
+// Product Reviews
+console.log("\n⭐ CUSTOMER REVIEWS");
+console.log("-".repeat(50));
+const review = new Review(
+    1, // review id
+    user1, // user who made the review
+    5, // rating
+    "Excellent gaming laptop, great performance!",
+    new Date() // current date
+);
+
+console.log(`Product: ${laptop.getProductName()}`);
+console.log(`Rating: ${"⭐".repeat(review.getRating())}`);
+console.log(`Customer Feedback: "${review.getComment()}"`);
+
+console.log("\n" + "=".repeat(50));

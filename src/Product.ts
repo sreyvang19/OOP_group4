@@ -143,4 +143,8 @@ export class Product {
     public getProductName(): string {
         return this.name;
     }
+
+    public getStockQuantity(): number {
+        return this.stockQuantity;
+    }
 }

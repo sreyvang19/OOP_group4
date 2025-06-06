@@ -1,17 +1,35 @@
 import { User } from "./User";
 
 export class Review {
-    private id : number;
-    private user : User;
-    private rating : number;
-    private comment : string;
-    private date : Date;
+    constructor(
+        private id: number,
+        private user: User,
+        private rating: number,
+        private comment: string,
+        private date: Date
+    ) {
+        if (rating < 1 || rating > 5) {
+            throw new Error("Rating must be between 1 and 5");
+        }
+    }
 
-    constructor(id: number, user : User, rating : number, comment : string, date : Date) {
-        this.id = id;
-        this.user = user;
-        this.rating = rating;
-        this.comment = comment;
-        this.date = date;
+    public getId(): number {
+        return this.id;
+    }
+
+    public getUser(): User {
+        return this.user;
+    }
+
+    public getRating(): number {
+        return this.rating;
+    }
+
+    public getComment(): string {
+        return this.comment;
+    }
+
+    public getDate(): Date {
+        return this.date;
     }
 }
